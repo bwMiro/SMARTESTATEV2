@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ESTATE SMART - Application SaaS Next.js
 
 Application SaaS complète pour automatiser la prospection immobilière avec l'IA.
@@ -206,3 +207,7 @@ Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou un
 
 Ce projet est privé et propriétaire.
 
+=======
+# SMARTESTATEV2
+SAAS IA Immobilier 
+>>>>>>> b849491c59770f9b7b032c624f0dee632e1a1440
