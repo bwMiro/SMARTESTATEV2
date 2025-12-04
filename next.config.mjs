@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  output: 'standalone',
+  // Empêche l'export statique type `next export`
   images: {
     unoptimized: true,
   },
