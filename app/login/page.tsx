@@ -1,16 +1,20 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { signIn } from 'next-auth/react'
+import { Building2 } from 'lucide-react'
+
+import { MarketingLayout } from '@/components/layouts/marketing-layout'
+import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Building2 } from 'lucide-react'
-import Link from 'next/link'
-import { MarketingLayout } from '@/components/layouts/marketing-layout'
-import { signIn } from 'next-auth/react'
-import { useToast } from '@/hooks/use-toast'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -92,7 +96,7 @@ export default function LoginPage() {
                     disabled={isLoading}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Mot de passe</Label>
