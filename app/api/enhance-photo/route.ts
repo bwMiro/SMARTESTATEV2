@@ -38,11 +38,12 @@ export async function POST(request: Request) {
       n: 1,
     })
 
-    const enhancedBase64 = edit.data[0]?.b64_json
-
-    if (!enhancedBase64) {
+    if (!edit.data || edit.data.length === 0 || !edit.data[0]?.b64_json) {
       throw new Error("La génération d'image a échoué")
     }
+    
+    const enhancedBase64 = edit.data[0]!.b64_json
+    
 
     const enhancedDataUrl = `data:image/png;base64,${enhancedBase64}`
 
