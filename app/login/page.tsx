@@ -3,30 +3,36 @@
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
+import type { FormEvent } from 'react'
 import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 
 export default function LoginPage() {
-  const router = useRouter()
   const params = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const callbackUrl = params.get('callbackUrl') || '/dashboard'
+  const callbackUrl = params?.get('callbackUrl') || '/dashboard'
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
     setLoading(true)
+    setError(null)
+
     const res = await signIn('credentials', {
       email,
       password,
       redirect: true,
       callbackUrl,
     })
-    // Avec redirect: true, NextAuth gère la redirection
+
+    // Avec redirect: true, NextAuth gère la redirection.
+    // Si une erreur survient, NextAuth redirigera vers /api/auth/error
+    // que l'on pourra gérer plus tard.
     setLoading(false)
   }
 
@@ -34,6 +40,12 @@ export default function LoginPage() {
     <main className="min-h-screen flex flex-col items-center justify-center px-4">
       <div className="max-w-md w-full space-y-6">
         <h1 className="text-2xl font-bold text-center">Connexion</h1>
+
+        {error && (
+          <p className="text-sm text-red-500 text-center">
+            {error}
+          </p>
+        )}
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-1">
