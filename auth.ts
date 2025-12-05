@@ -12,6 +12,7 @@ const credentialsSchema = z.object({
 })
 
 export const authConfig: NextAuthConfig = {
+  // On désactive temporairement l'adapter Prisma pour tester
   // adapter: PrismaAdapter(prisma) as any,
   session: {
     strategy: "jwt",
@@ -20,7 +21,6 @@ export const authConfig: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
-  },
   },
   providers: [
     Credentials({
@@ -88,12 +88,12 @@ export const authConfig: NextAuthConfig = {
         // @ts-ignore champs custom non typés
         session.user.onboarded = Boolean(token.onboarded)
       }
-    
+
       return session
     },
-    
   },
 }
+
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)
 
