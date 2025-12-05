@@ -80,16 +80,17 @@ export const authConfig: NextAuthConfig = {
     },
     async session({ session, token }) {
       if (session.user) {
-        // @ts-expect-error champs custom
+        // @ts-ignore champs custom non typés
         session.user.id = token.sub ?? ""
-        // @ts-expect-error champs custom
+        // @ts-ignore champs custom non typés
         session.user.role = token.role as string
-        // @ts-expect-error champs custom
+        // @ts-ignore champs custom non typés
         session.user.onboarded = Boolean(token.onboarded)
       }
-
+    
       return session
     },
+    
   },
 }
 
