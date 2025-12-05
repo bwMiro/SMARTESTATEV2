@@ -42,7 +42,7 @@ export function OnboardingModal() {
             </Link>
           </Card>
 
-          <Card className="hover:border-accent/50 transition-colors cursor-pointer" asChild>
+          <Card className="hover:border-accent/50 transition-colors cursor-pointer">
             <Link href="/dashboard/photo-enhancer" onClick={() => setOpen(false)}>
               <CardHeader>
                 <div className="h-12 w-12 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
@@ -56,7 +56,7 @@ export function OnboardingModal() {
             </Link>
           </Card>
 
-          <Card className="hover:border-accent/50 transition-colors cursor-pointer" asChild>
+          <Card className="hover:border-accent/50 transition-colors cursor-pointer">
             <Link href="/dashboard/prospect-scoring" onClick={() => setOpen(false)}>
               <CardHeader>
                 <div className="h-12 w-12 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
