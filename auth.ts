@@ -1,32 +1,32 @@
-import NextAuth from 'next-auth'
-import Credentials from 'next-auth/providers/credentials'
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import { compare } from 'bcryptjs'
-import { z } from 'zod'
+import NextAuth, { type NextAuthConfig } from "next-auth"
+import Credentials from "next-auth/providers/credentials"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { compare } from "bcryptjs"
+import { z } from "zod"
 
-import { prisma } from '@/lib/prisma'
+import { prisma } from "@/lib/prisma"
 
 const credentialsSchema = z.object({
-  email: z.string().email('Adresse email invalide'),
-  password: z.string().min(6, 'Mot de passe requis'),
+  email: z.string().email("Adresse email invalide"),
+  password: z.string().min(6, "Mot de passe requis"),
 })
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authConfig: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   trustHost: true,
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   providers: [
     Credentials({
-      name: 'Connexion email',
+      name: "Connexion email",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Mot de passe', type: 'password' },
+        email: { label: "Email", type: "email" },
+        password: { label: "Mot de passe", type: "password" },
       },
       authorize: async (credentials) => {
         const parsed = credentialsSchema.safeParse(credentials)
@@ -51,7 +51,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return {
           id: user.id,
           email: user.email,
-          name: [user.firstName, user.lastName].filter(Boolean).join(' ') || user.email || 'Utilisateur',
+          name:
+            [user.firstName, user.lastName].filter(Boolean).join(" ") ||
+            user.email ||
+            "Utilisateur",
           role: user.role,
           onboarded: user.onboarded,
         }
@@ -77,13 +80,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.sub ?? ''
+        // @ts-expect-error champs custom
+        session.user.id = token.sub ?? ""
+        // @ts-expect-error champs custom
         session.user.role = token.role as string
+        // @ts-expect-error champs custom
         session.user.onboarded = Boolean(token.onboarded)
       }
 
       return session
     },
   },
-})
+}
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)
 
