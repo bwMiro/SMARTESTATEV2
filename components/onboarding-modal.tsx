@@ -28,7 +28,7 @@ export function OnboardingModal() {
         </DialogHeader>
 
         <div className="grid md:grid-cols-3 gap-4 mt-4">
-          <Card className="hover:border-accent/50 transition-colors cursor-pointer" asChild>
+        <Card className="hover:border-accent/50 transition-colors cursor-pointer">
             <Link href="/dashboard/ad-generator" onClick={() => setOpen(false)}>
               <CardHeader>
                 <div className="h-12 w-12 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
